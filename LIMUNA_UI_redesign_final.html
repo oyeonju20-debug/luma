@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIMUNA — OFFICIAL WEBSITE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090d;
+  --panel:#101219;
+  --panel2:#151821;
+  --text:#f4f2ed;
+  --muted:#9b9da7;
+  --line:rgba(255,255,255,.11);
+  --accent:#d7ff63;
+  --accent2:#9cf2ff;
+  --radius:22px;
+  --display:"Bricolage Grotesque","Noto Sans KR",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"Noto Sans KR","Helvetica Neue",Arial,sans-serif;
+  overflow-x:hidden;
+  line-height:1.6;
+  letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:50;
+  background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:100% 4px;opacity:.18;
+}
+a{color:inherit;text-decoration:none}
+.header{
+  position:fixed;top:18px;left:50%;transform:translateX(-50%);
+  width:min(1180px,calc(100% - 36px));height:68px;padding:0 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:100;border:1px solid rgba(255,255,255,.12);
+  background:rgba(8,9,13,.66);backdrop-filter:blur(18px);
+  border-radius:999px;box-shadow:0 18px 60px rgba(0,0,0,.25);
+}
+.logo{font-weight:700;letter-spacing:.22em;font-size:15px}
+.nav{display:flex;gap:26px}
+.nav a{font-size:11px;letter-spacing:.18em;color:#c7c8ce;transition:.25s}
+.nav a:hover{color:var(--accent)}
+.menu-button{display:none;background:none;border:0;color:white}
+.hero{height:100svh;min-height:700px;position:relative;display:grid;place-items:center;overflow:hidden}
+.hero-slides,.hero-slide,.hero-overlay{position:absolute;inset:0}
+.hero-slide{background-size:cover;background-position:center;opacity:0;transform:scale(1.04);transition:opacity 1s,transform 6s}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero-overlay{background:
+  radial-gradient(circle at 70% 40%,rgba(156,242,255,.13),transparent 28%),
+  linear-gradient(90deg,rgba(8,9,13,.82),rgba(8,9,13,.25),rgba(8,9,13,.72))}
+.hero-content{position:relative;z-index:2;width:min(1180px,calc(100% - 36px));margin-top:90px}
+.eyebrow{font-size:11px;letter-spacing:.28em;color:var(--accent);margin:0 0 18px}
+.hero h1{font-size:clamp(72px,14vw,190px);line-height:.8;letter-spacing:-.08em;margin:0;font-weight:600}
+.sub{font-size:12px;letter-spacing:.35em;color:#d7d8dd;margin-top:30px}
+.hero-dots{position:absolute;right:40px;top:50%;z-index:3;display:grid;gap:10px}
+.dot{width:7px;height:7px;padding:0;border:1px solid #fff;border-radius:50%;background:transparent;opacity:.45;cursor:pointer}
+.dot.active{background:var(--accent);border-color:var(--accent);opacity:1;box-shadow:0 0 16px var(--accent)}
+.scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.3em;color:#aaa}
+.scroll span{display:block;width:1px;height:36px;background:#aaa;margin:12px auto 0}
+.section{width:min(1180px,calc(100% - 36px));margin:0 auto;padding:140px 0}
+.heading{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:46px}
+.heading span{font-size:10px;color:var(--accent);letter-spacing:.2em}
+.heading h2{font-size:13px;letter-spacing:.28em;margin:0}
+.news-list{border-top:1px solid var(--line)}
+.news-item{min-height:92px;display:grid;grid-template-columns:130px 80px 1fr 25px;gap:20px;align-items:center;border-bottom:1px solid var(--line);transition:.3s}
+.news-item:hover{padding-left:14px;background:rgba(255,255,255,.025)}
+.news-item time,.news-item p{font-size:12px;color:var(--muted)}
+.news-item b{font-size:9px;letter-spacing:.16em;color:var(--accent)}
+.news-item i{font-style:normal;text-align:right}
+.works-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.work{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--panel);min-height:300px}
+.work:nth-child(1),.work:nth-child(4){grid-column:span 7}
+.work:nth-child(2),.work:nth-child(3){grid-column:span 5}
+.work img{width:100%;height:100%;min-height:360px;object-fit:cover;display:block;transition:transform .7s}
+.work:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.85))}
+.work:hover img{transform:scale(1.06)}
+.work>div{position:absolute;left:24px;bottom:22px;z-index:2}
+.work h3{font-size:13px;letter-spacing:.16em;margin:0 0 7px}
+.work p{font-size:11px;color:#bbb;margin:0}
+.music{background:linear-gradient(180deg,transparent,rgba(156,242,255,.025),transparent)}
+.music-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+.video-card{background:var(--panel);padding:12px;border:1px solid var(--line);border-radius:var(--radius)}
+.video{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
+.video iframe{width:100%;height:100%;border:0}
+.video-title{display:flex;justify-content:space-between;padding:18px 6px 6px;font-size:9px;letter-spacing:.18em;color:#aaa}
+.video-title span:last-child{color:var(--accent)}
+.channel{display:flex;justify-content:space-between;margin-top:28px;padding:20px 2px;border-bottom:1px solid var(--line);font-size:10px;letter-spacing:.2em}
+.profile-layout{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.profile-image{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;background:var(--panel)}
+.profile-image img{width:100%;height:100%;object-fit:cover}
+.profile-copy .name{font-size:clamp(42px,7vw,88px);letter-spacing:-.06em;margin:0 0 18px}
+.role{font-size:10px;letter-spacing:.2em;color:var(--accent)}
+.bio{line-height:2;color:#b9bac1;font-size:13px}
+.link-list{border-top:1px solid var(--line)}
+.link-list a{display:flex;justify-content:space-between;padding:28px 8px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.2em;transition:.25s}
+.link-list a:hover{padding-left:20px;color:var(--accent)}
+footer{padding:34px max(18px,calc((100vw - 1180px)/2));display:flex;justify-content:space-between;border-top:1px solid var(--line);font-size:9px;color:#777;letter-spacing:.15em}
+footer strong{color:#eee}
+@media(max-width:760px){
+  .header{top:10px;width:calc(100% - 20px)}
+  .nav{position:absolute;top:76px;left:0;right:0;display:none;padding:18px;border:1px solid var(--line);border-radius:20px;background:rgba(8,9,13,.94);flex-direction:column;gap:18px}
+  .nav.open{display:flex}
+  .menu-button{display:block;width:28px;height:28px;position:relative}
+  .menu-button span{display:block;width:20px;height:1px;background:white;margin:6px auto;transition:.25s}
+  .menu-button.active span:first-child{transform:translateY(3.5px) rotate(45deg)}
+  .menu-button.active span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+  .hero{min-height:620px}
+  .hero-content{margin-top:70px}
+  .hero-dots{right:18px}
+  .section{padding:90px 0}
+  .news-item{grid-template-columns:82px 55px 1fr 15px;gap:9px}
+  .news-item p{font-size:11px}
+  .works-grid,.music-grid,.profile-layout{display:grid;grid-template-columns:1fr}
+  .work:nth-child(n){grid-column:auto}
+  .work img{min-height:330px}
+  .profile-layout{gap:30px}
+  footer{flex-direction:column;gap:12px}
+}
+
+/* ===== LIMUNA UI REDESIGN / FINAL PATCH ===== */
+.logo,.hero h1,.heading h2,.profile-copy .name,.work h3{
+  font-family:var(--display)
+}
+.logo{letter-spacing:.14em;font-weight:600}
+.nav a{font-size:12px;letter-spacing:.1em;font-weight:500}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:500}
+.hero h1{font-weight:500;letter-spacing:-.055em;line-height:.86;font-variation-settings:"opsz" 96}
+.sub{font-size:12px;letter-spacing:.24em;font-weight:400}
+.heading span{font-size:11px;letter-spacing:.14em;font-weight:500}
+.heading h2{font-size:clamp(20px,2.4vw,28px);letter-spacing:-.01em;font-weight:500}
+.news-item time,.news-item p{font-size:13px}
+.news-item p{color:#d6d7dc}
+.news-item b{font-size:10px;letter-spacing:.12em;font-weight:600}
+.work h3{font-size:16px;letter-spacing:.02em;font-weight:500}
+.work p{font-size:12px}
+.video-title{font-size:11px;letter-spacing:.12em;font-weight:500}
+.channel,.link-list a{font-size:13px;letter-spacing:.12em;font-weight:500}
+.profile-copy .name{font-weight:500;letter-spacing:-.05em;line-height:.95}
+.role{font-size:12px;letter-spacing:.14em;font-weight:500}
+.bio{font-size:15px;line-height:1.95;max-width:46ch;word-break:keep-all}
+footer{font-size:11px;letter-spacing:.1em}
+.scroll{font-size:10px;letter-spacing:.24em}
+
+.music-grid{grid-template-columns:repeat(6,1fr)}
+.video-card{grid-column:span 3;position:relative}
+.video-card:first-child{grid-column:1/-1}
+.video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#08090d}
+.video iframe{width:100%;height:100%;display:block;border:0}
+.yt-thumb{
+  position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;
+  cursor:pointer;background:#000 center/cover no-repeat;color:#fff
+}
+.yt-thumb:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(transparent 50%,rgba(0,0,0,.55))
+}
+.yt-play{
+  position:absolute;left:50%;top:50%;width:64px;height:64px;
+  margin:-32px 0 0 -32px;border-radius:50%;
+  background:rgba(8,9,13,.6);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;
+  transition:.25s
+}
+.yt-play:after{
+  content:"";margin-left:4px;border-left:16px solid #fff;
+  border-top:10px solid transparent;border-bottom:10px solid transparent
+}
+.yt-thumb:hover .yt-play,.yt-thumb:focus-visible .yt-play{
+  background:var(--accent);border-color:var(--accent);transform:scale(1.08)
+}
+.yt-thumb:hover .yt-play:after,.yt-thumb:focus-visible .yt-play:after{
+  border-left-color:#08090d
+}
+.video-title a{color:var(--accent)}
+.video-title a:hover{text-decoration:underline;text-underline-offset:4px}
+
+.work{position:relative}
+.work:before,.video-card:before{
+  content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;
+  pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),
+    rgba(215,255,99,.10),transparent 60%)
+}
+.work:hover:before,.video-card:hover:before{opacity:1}
+a:focus-visible,button:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px
+}
+
+@media(max-width:760px){
+  .music-grid{grid-template-columns:1fr}
+  .video-card,.video-card:first-child{grid-column:auto}
+  .nav a{font-size:13px}
+  .yt-play{width:52px;height:52px;margin:-26px 0 0 -26px}
+  .yt-play:after{
+    border-left-width:13px;border-top-width:8px;border-bottom-width:8px
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms!important}
+  .hero-slide{transform:none!important}
+}
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="#">LIMUNA</a>
+  <nav class="nav">
+    <a href="#news">NEWS</a>
+    <a href="#works">WORKS</a>
+    <a href="#music">MUSIC</a>
+    <a href="#profile">PROFILE</a>
+    <a href="#link">LINK</a>
+  </nav>
+  <button class="menu-button" aria-label="메뉴"><span></span><span></span></button>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-slides">
+    <div class="hero-slide active" style="background-image:url('assets/art1.png')"></div>
+    <div class="hero-slide" style="background-image:url('assets/art2.png')"></div>
+    <div class="hero-slide" style="background-image:url('assets/art3.png')"></div>
+    <div class="hero-slide" style="background-image:url('assets/art4.png')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="eyebrow">ARTIST / ILLUSTRATOR / CREATOR</p>
+    <h1>LIMUNA</h1>
+    <p class="sub">OFFICIAL WEBSITE</p>
+  </div>
+  <div class="hero-dots">
+    <button class="dot active" data-slide="0"></button>
+    <button class="dot" data-slide="1"></button>
+    <button class="dot" data-slide="2"></button>
+    <button class="dot" data-slide="3"></button>
+  </div>
+  <div class="scroll">SCROLL<span></span></div>
+</section>
+
+<section id="news" class="section news">
+  <div class="heading"><span>01</span><h2>NEWS</h2></div>
+  <div class="news-list">
+    <a href="#" class="news-item"><time>2026.10.01</time><b>INFO</b><p>Official Website Open.</p><i>↗</i></a>
+    <a href="#works" class="news-item"><time>2026.10.01</time><b>ART</b><p>New illustration works are now available.</p><i>↗</i></a>
+    <a href="#music" class="news-item"><time>2026.10.01</time><b>MUSIC</b><p>Music video collection has been updated.</p><i>↗</i></a>
+  </div>
+</section>
+
+<section id="works" class="section works">
+  <div class="heading"><span>02</span><h2>WORKS</h2></div>
+  <div class="works-grid">
+    <a href="assets/art1.png" class="work" target="_blank" rel="noopener">
+      <img src="assets/art1.png" alt="Artwork 01">
+      <div><h3>WORK 01</h3><p>Illustration</p></div>
+    </a>
+    <a href="assets/art2.png" class="work" target="_blank" rel="noopener">
+      <img src="assets/art2.png" alt="Artwork 02">
+      <div><h3>WORK 02</h3><p>Illustration</p></div>
+    </a>
+    <a href="assets/art3.png" class="work" target="_blank" rel="noopener">
+      <img src="assets/art3.png" alt="Artwork 03">
+      <div><h3>WORK 03</h3><p>Illustration</p></div>
+    </a>
+    <a href="assets/art4.png" class="work" target="_blank" rel="noopener">
+      <img src="assets/art4.png" alt="Artwork 04">
+      <div><h3>WORK 04</h3><p>Illustration</p></div>
+    </a>
+  </div>
+</section>
+
+<section id="music" class="section music">
+  <div class="heading"><span>03</span><h2>MUSIC</h2></div>
+  <div class="music-grid">
+    <article class="video-card">
+      <div class="video" data-id="9pGCcv6pvfc">
+        <button class="yt-thumb" type="button" aria-label="TRACK 01 재생"
+          style="background-image:url('https://i.ytimg.com/vi/9pGCcv6pvfc/hqdefault.jpg')">
+          <span class="yt-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="video-title">
+        <span>TRACK 01</span>
+        <a href="https://www.youtube.com/watch?v=9pGCcv6pvfc" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+      </div>
+    </article>
+    <article class="video-card">
+      <div class="video" data-id="_4Z5X1LgAoU">
+        <button class="yt-thumb" type="button" aria-label="TRACK 02 재생"
+          style="background-image:url('https://i.ytimg.com/vi/_4Z5X1LgAoU/hqdefault.jpg')">
+          <span class="yt-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="video-title">
+        <span>TRACK 02</span>
+        <a href="https://www.youtube.com/watch?v=_4Z5X1LgAoU" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+      </div>
+    </article>
+    <article class="video-card">
+      <div class="video" data-id="bCwaMLKRa-4">
+        <button class="yt-thumb" type="button" aria-label="TRACK 03 재생"
+          style="background-image:url('https://i.ytimg.com/vi/bCwaMLKRa-4/hqdefault.jpg')">
+          <span class="yt-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="video-title">
+        <span>TRACK 03</span>
+        <a href="https://www.youtube.com/watch?v=bCwaMLKRa-4" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+      </div>
+    </article>
+    <article class="video-card">
+      <div class="video" data-id="506IEqfLPVs">
+        <button class="yt-thumb" type="button" aria-label="TRACK 04 재생"
+          style="background-image:url('https://i.ytimg.com/vi/506IEqfLPVs/hqdefault.jpg')">
+          <span class="yt-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="video-title">
+        <span>TRACK 04</span>
+        <a href="https://www.youtube.com/watch?v=506IEqfLPVs" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+      </div>
+    </article>
+    <article class="video-card">
+      <div class="video" data-id="zmA5foVFwME">
+        <button class="yt-thumb" type="button" aria-label="TRACK 05 재생"
+          style="background-image:url('https://i.ytimg.com/vi/zmA5foVFwME/hqdefault.jpg')">
+          <span class="yt-play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="video-title">
+        <span>TRACK 05</span>
+        <a href="https://www.youtube.com/watch?v=zmA5foVFwME" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+      </div>
+    </article>
+  </div>
+  <a class="channel" href="https://youtube.com/@limuna-x3j" target="_blank" rel="noopener noreferrer">YOUTUBE CHANNEL <span>↗</span></a>
+</section>
+
+<section id="profile" class="section profile">
+  <div class="heading"><span>04</span><h2>PROFILE</h2></div>
+  <div class="profile-layout">
+    <div class="profile-image"><img src="assets/art3.png" alt="Profile artwork"></div>
+    <div class="profile-copy">
+      <p class="name">LIMUNA</p>
+      <p class="role">ILLUSTRATION / MUSIC / CREATIVE</p>
+      <p class="bio">일러스트와 음악을 중심으로 다양한 창작 활동을 하고 있습니다.<br>이곳에 본인의 소개와 활동 내용을 작성하면 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="link" class="section links">
+  <div class="heading"><span>05</span><h2>LINK</h2></div>
+  <div class="link-list">
+    <a href="https://youtube.com/@limuna-x3j" target="_blank" rel="noopener noreferrer"><span>YOUTUBE</span><span>↗</span></a>
+    <a href="#" target="_blank" rel="noopener"><span>X / TWITTER</span><span>↗</span></a>
+    <a href="#" target="_blank" rel="noopener"><span>INSTAGRAM</span><span>↗</span></a>
+    <a href="#" target="_blank" rel="noopener"><span>PIXIV</span><span>↗</span></a>
+  </div>
+</section>
+</main>
+
+<footer><strong>LIMUNA</strong><span>© 2026 LIMUNA. ALL RIGHTS RESERVED.</span></footer>
+
+<script>
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.dot');
+let current = 0;
+let timer;
+
+function showSlide(index) {
+  current = index;
+  slides.forEach((s,i) => s.classList.toggle('active', i === index));
+  dots.forEach((d,i) => d.classList.toggle('active', i === index));
+}
+function autoPlay() {
+  clearInterval(timer);
+  timer = setInterval(() => showSlide((current + 1) % slides.length), 5000);
+}
+dots.forEach(dot => dot.addEventListener('click', () => {
+  showSlide(Number(dot.dataset.slide)); autoPlay();
+}));
+autoPlay();
+
+const menu = document.querySelector('.menu-button');
+const nav = document.querySelector('.nav');
+menu.addEventListener('click', () => {
+  nav.classList.toggle('open');
+  menu.classList.toggle('active');
+});
+document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', () => {
+  nav.classList.remove('open'); menu.classList.remove('active');
+}));
+</script>
+
+<script>
+document.querySelectorAll('.work, .video-card, .news-item').forEach(el=>{
+  el.addEventListener('pointermove',e=>{
+    const r=el.getBoundingClientRect();
+    el.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    el.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+</script>
+
+<script>
+/* ===== LIMUNA YouTube Lazy Player ===== */
+document.querySelectorAll('.video[data-id]').forEach(function(box){
+  var button = box.querySelector('.yt-thumb');
+  if(!button) return;
+
+  button.addEventListener('click',function(){
+    var id = box.dataset.id;
+    if(!id) return;
+
+    var iframe = document.createElement('iframe');
+    iframe.src =
+      'https://www.youtube.com/embed/' +
+      encodeURIComponent(id) +
+      '?autoplay=1&rel=0&playsinline=1';
+    iframe.title = 'LIMUNA MUSIC';
+    iframe.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; ' +
+      'gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    box.replaceChildren(iframe);
+  });
+});
+
+document.querySelectorAll('.work,.video-card').forEach(function(card){
+  card.addEventListener('pointermove',function(e){
+    var rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-rect.left)+'px');
+    card.style.setProperty('--my',(e.clientY-rect.top)+'px');
+  });
+});
+</script>
+
+</body>
+</html>
